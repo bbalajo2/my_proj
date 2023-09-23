@@ -1,7 +1,10 @@
+import 'dart:js';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../models/note_data.dart';  // Import NoteData
+import '../models/note.dart';
+import '../models/note_data.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -10,11 +13,21 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
+class _HomePageState extends State<HomePage> {
+
 void addNewNote() {
+  //create a new id for the note
+  int id = Provider.of<NoteData>(context, listen: false).getAllNotes().length;
+  Note newNote = Note(
+    id: id,
+    text: "",
+  );
+  
+  //edit the note
   
 }
 
-class _HomePageState extends State<HomePage> {
+
   @override
   Widget build(BuildContext context) {
     return Consumer<NoteData>(
