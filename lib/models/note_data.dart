@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'note.dart';
 
 class NoteData extends ChangeNotifier {
-  List<Note> allNotes = [
-    Note(id: 0, text: "Name: John Doe"),
-    Note(id: 1, text: "Test number 2")
-  ];
+  List<Note> allNotes = [];
 
   List<Note> getAllNotes(){
     notifyListeners(); 

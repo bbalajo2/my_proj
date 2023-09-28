@@ -1,9 +1,7 @@
 import 'dart:async';
-import 'dart:js';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/note_data.dart';
-import '../models/note.dart';
 import "../pages/new_notes_page.dart";
 
 class HomePage extends StatefulWidget {
@@ -28,30 +26,24 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
-  void addNewNote() {
-    int id = Provider.of<NoteData>(context as BuildContext, listen: false).getAllNotes().length + 1;
-    Note newNote = Note(
-      id: id,
-      text: "",
-    );
-
-    goToNewNotePage(newNote);
-  }
-
-  void goToNewNotePage(Note note) {
+  void goToNewNotePage() {
     Navigator.push(
-      context as BuildContext,
+      context,
       MaterialPageRoute(
         builder: (context) => newNotePage(),
       ),
     );
   }
 
+  void deleteNote() {
+    Provider.of<NoteData>(context, listen: false).deleteNote();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<NoteData>(
       builder: (context, noteData, child) => Scaffold(
-        backgroundColor: Color.fromARGB(255, 46, 217, 19),
+        backgroundColor: Color.fromARGB(255, 99, 174, 169),
         appBar: AppBar(
           title: Text(
             "Current Time: ${DateTime.now().toLocal()}",
@@ -59,8 +51,8 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () => addNewNote(),
-          child: Icon(Icons.add),
+          onPressed: () => goToNewNotePage(),
+          child: const Icon(Icons.add),
         ),
         body: Column(
           children: [
@@ -71,7 +63,16 @@ class _HomePageState extends State<HomePage> {
                 style: TextStyle(
                     fontSize: 42,
                     fontWeight: FontWeight.bold,
-                    color: Colors.blue),
+                    color: Color.fromARGB(255, 181, 197, 35)),
+              ),
+            ),
+            OutlinedButton(
+              onPressed: () => deleteNote(),
+              child: Text('Delete last Note'),
+              style: OutlinedButton.styleFrom(
+                primary: Colors.white,
+                backgroundColor: Color.fromARGB(255, 220, 148, 23),
+                textStyle: TextStyle(fontSize: 20),
               ),
             ),
             ListView.builder(
